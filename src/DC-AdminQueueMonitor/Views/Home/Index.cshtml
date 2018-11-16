@@ -1,0 +1,83 @@
+﻿@model DC_AdminQueueMonitor.QueueViewModel
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<script src="~/Scripts/angular-chart.min.js"></script>
+
+<h2>View</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Last Five Min</th>
+            <th>Today</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Submitted</td>
+            <td>@Html.DisplayFor(modelItem => Model.LastFiveMinutes.Submitted)</td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Today.Submitted)
+            </td>
+        </tr>
+        <tr>
+            <td>Processing</td>
+            <td>@Html.DisplayFor(modelItem => Model.LastFiveMinutes.Processing)</td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Today.Processing)
+            </td>
+        </tr>
+        <tr>
+            <td>Failed</td>
+            <td>@Html.DisplayFor(modelItem => Model.LastFiveMinutes.Failed)</td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Today.Failed)
+            </td>
+        </tr>
+        <tr>
+            <td>Completed</td>
+            <td>@Html.DisplayFor(modelItem => Model.LastFiveMinutes.Completed)</td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Today.Completed)
+            </td>
+        </tr>
+    </tbody>
+    </table>
+
+    @foreach (var topic in Model.Topics)
+    {
+        <h2>@topic.Name</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        Active
+                    </th>
+                    <th>Deadletter</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var sub in topic.Subscriptions)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => sub.Name)
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => sub.ActiveMessageCount)</td>
+                        <td>@Html.DisplayFor(modelItem => sub.DeadletterMessageCount)</td>
+                        @*<td>
+                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                            </td>*@
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+

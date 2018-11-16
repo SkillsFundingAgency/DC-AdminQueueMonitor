@@ -1,0 +1,26 @@
+﻿@model DC_AdminQueueMonitor.QueueViewModel
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<div ng-app="CheckEnvApp">
+    <div class="col-md-12" ng-controller="CheckEnvController">
+        {{message}}
+
+        <div ng-click="doacheck(4)" class="btn-default" ng-hide="started">Start Monitoring Prod</div>
+        <div class="col-md-6">
+            <h2>Message topic sizes (ILR)</h2>
+            <canvas id="bar" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series"></canvas>
+        </div>
+        <div class="col-md-6">
+            <canvas id="bar2" class="chart chart-bar" chart-data="dataNoTime" chart-labels="labelsNoTime" chart-series="series"></canvas>
+        </div>
+        <div class="col-md-6">
+            <h2>Jobs Submitted / Failed Last Five Minutes</h2>
+            <div ng-click="joblook(4)" class="btn-default" ng-hide="startedJobs">Jobs Prod</div>
+            <canvas id="jobs" class="chart chart-line" chart-data="jobData" chart-labels="jobLabels" chart-series="jobSeries"></canvas>
+        </div>
+    </div>
+
+</div>
