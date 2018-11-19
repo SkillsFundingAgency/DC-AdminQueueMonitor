@@ -7,6 +7,7 @@ using ESFA.DC.JobStatus.Interface;
 using JobSubmit.Services;
 using Microsoft.ServiceBus;
 using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -27,9 +28,11 @@ namespace DC_AdminQueueMonitor.Controllers
         [HttpPost]
         public ActionResult GetTopicData(int id)
         {
-            string connectionString = Settings.Default.ServiceBusConnectionString;
+
+            string connectionString = ConfigurationManager.AppSettings["ServiceBusConnectionString"];  //Settings.Default.ServiceBusConnectionString;
             var nsmgr = NamespaceManager.CreateFromConnectionString(connectionString);
-            var subs = nsmgr.GetSubscriptions(Settings.Default.ilrtopic);
+            //var subs = nsmgr.GetSubscriptions(Settings.Default.ilrtopic);
+            var subs = nsmgr.GetSubscriptions(ConfigurationManager.AppSettings["ilrtopic"]);
 
 
             List<Subscription> subscriptions = new List<Subscription>();
@@ -58,7 +61,9 @@ namespace DC_AdminQueueMonitor.Controllers
 
             List<long> result = new List<long>();
 
-            var apiurl = Settings.Default.JobBaseUrl;
+            //var apiurl = Settings.Default.JobBaseUrl;
+            var apiurl = System.Configuration.ConfigurationManager.AppSettings["JobBaseUrl"];  //Settings.Default.JobBaseUrl;
+
             var apiSettings = new ApiSettings() { JobAPIBaseUrl = apiurl };
             var _httpClient = new BespokeHttpClient();
             var _serializationService = new ESFA.DC.Serialization.Json.JsonSerializationService();

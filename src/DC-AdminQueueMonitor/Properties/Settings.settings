@@ -1,15 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="DC_AdminQueueMonitor.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
   <Profiles />
-  <Settings>
-    <Setting Name="JobBaseUrl" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">https://dcol-dev-jobapi-weu.dev.ase.dct.fasst.org.uk/api</Value>
-    </Setting>
-    <Setting Name="ServiceBusConnectionString" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">endpoint=</Value>
-    </Setting>
-    <Setting Name="ilrtopic" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">ilr1819submissiontopic</Value>
-    </Setting>
-  </Settings>
+  <Settings />
 </SettingsFile>

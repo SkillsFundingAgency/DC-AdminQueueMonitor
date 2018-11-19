@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,11 +19,13 @@ namespace DC_AdminQueueMonitor.Controllers
         {
             QueueViewModel result = new QueueViewModel();
 
-            string connectionString = Settings.Default.ServiceBusConnectionString;
+            var x = System.Web.Configuration.WebConfigurationManager.AppSettings["ServiceBusConnectionString"];
+            string connectionString = ConfigurationManager.AppSettings["ServiceBusConnectionString"];  //Settings.Default.ServiceBusConnectionString;
+
             ServiceBusService sbservice = new ServiceBusService(connectionString);
             result.Topics = sbservice.GetTopicsAndSubscriptions();
 
-            var apiurl = Settings.Default.JobBaseUrl;
+            var apiurl = System.Configuration.ConfigurationManager.AppSettings["JobBaseUrl"];  //Settings.Default.JobBaseUrl;
             var apiSettings = new ApiSettings() { JobAPIBaseUrl = apiurl };
             var _httpClient = new BespokeHttpClient();
             var _serializationService = new ESFA.DC.Serialization.Json.JsonSerializationService();
