@@ -14,7 +14,7 @@ using DC_AdminQueueMonitor.Models;
 
 namespace DC_AdminQueueMonitor.Controllers
 {
-    // [Authorize]
+    [Authorize]
     public class HomeController : Controller
     {
         public async Task<ActionResult> Index()
