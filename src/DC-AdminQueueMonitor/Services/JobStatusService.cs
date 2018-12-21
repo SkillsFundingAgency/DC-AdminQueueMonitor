@@ -1,6 +1,8 @@
 ﻿using DC.Web.Ui.Services.BespokeHttpClient;
 using DC.Web.Ui.Services.Services;
 using DC.Web.Ui.Settings.Models;
+using DC_AdminQueueMonitor.Models;
+using ESFA.DC.Jobs.Model;
 using ESFA.DC.JobStatus.Interface;
 using System;
 using System.Collections.Generic;
@@ -15,26 +17,45 @@ namespace DC_AdminQueueMonitor.Services
     {
 
         private SubmissionService _submissionService;
-        public JobStatusService(SubmissionService submissionService)
+        private AuditService _auditService;
+        public JobStatusService(SubmissionService submissionService,AuditService auditService)
         {
             _submissionService = submissionService;
+            _auditService = auditService;
         }
 
-        public async Task<IEnumerable<JobCount>> GetStatusCounts(IEnumerable<long> lastHowManyMinutes)
+        public async Task<IEnumerable<JobCount>> GetStatusCounts(IEnumerable<DateRangeUtc> toFroms)
         {
             DateTime date = DateTime.UtcNow;
             ServicePointManager.ServerCertificateValidationCallback += (sendingsite, cert, chain, sslPolicyErrors) => true;
 
             var jobs = await _submissionService.GetAllJobs();
-            var result = new List<JobCount>(lastHowManyMinutes.Count());
-            foreach (long lhmm in lastHowManyMinutes)
+            var result = new List<JobCount>(toFroms.Count());
+            foreach (var tf in toFroms)
             {
-                TimeSpan timegap = TimeSpan.FromMinutes(lhmm);
-                var jc = new JobCount();
-                jc.Submitted = jobs.Where(s => (date - s.DateTimeSubmittedUtc) < timegap).Count();
-                jc.Processing = jobs.Where(s => (date - s.DateTimeUpdatedUtc) < timegap && StatusWorking(s.Status)).Count();
-                jc.Failed = jobs.Where(s => (date - s.DateTimeUpdatedUtc) < timegap && StatusFailed(s.Status)).Count();
-                jc.Completed = jobs.Where(s => (date - s.DateTimeUpdatedUtc) < timegap && s.Status == JobStatusType.Completed).Count();
+                var jc = new JobCount();                
+
+                jc.Submitted = jobs.Where(s => s.DateTimeSubmittedUtc >= tf.FromUtc && s.DateTimeSubmittedUtc < tf.ToUtc).Count();
+                jc.Processing = jobs.Where(s => (s.DateTimeUpdatedUtc>= tf.FromUtc && s.DateTimeUpdatedUtc < tf.ToUtc) && StatusWorking(s.Status)).Count();
+                jc.Failed = jobs.Where(s => (s.DateTimeUpdatedUtc >= tf.FromUtc && s.DateTimeUpdatedUtc < tf.ToUtc) && StatusFailed(s.Status)).Count();
+                var completedJobs = jobs.Where(s => s.DateTimeUpdatedUtc >= tf.FromUtc && s.DateTimeUpdatedUtc < tf.ToUtc && s.Status == JobStatusType.Completed);
+                jc.Completed = completedJobs.Count();
+                jc.AverageJobProcessingTime = 0;
+                if (jc.Completed > 0)
+                {
+                    jc.AverageJobProcessingTime = completedJobs.Average(s => (s.DateTimeUpdatedUtc - s.DateTimeSubmittedUtc).Value.TotalSeconds);
+                    List<JobAuditDetail> jad = new List<JobAuditDetail>(jc.Completed);
+                    TimeSpan time = TimeSpan.Zero;
+                    TimeSpan queueTime = TimeSpan.Zero;
+                    foreach ( var job in completedJobs )
+                    {
+                        var rc = await _auditService.GetAuditDataBlock(job.JobId);
+                        time += rc.Durations.Last();
+                        queueTime += rc.JobQueueTime;
+                    }
+                    jc.AverageJobProcessingTime = time.TotalSeconds / (float)jc.Completed / 60;
+                    jc.AverageQueueTime = queueTime.TotalSeconds / (float)jc.Completed / 60;
+                }
                 result.Add(jc);
             }
             return result;
@@ -63,6 +84,5 @@ namespace DC_AdminQueueMonitor.Services
                     return false;
             }
         }
-
     }
 }

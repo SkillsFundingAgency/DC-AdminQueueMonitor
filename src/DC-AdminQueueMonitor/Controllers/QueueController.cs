@@ -17,6 +17,7 @@ using System.Web.Mvc;
 
 namespace DC_AdminQueueMonitor.Controllers
 {
+    [Authorize]
     public class QueueController : Controller
     {
         // GET: Queue

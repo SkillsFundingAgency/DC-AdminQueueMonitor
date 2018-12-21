@@ -12,37 +12,53 @@
         <tr>
             <th></th>
             <th>Last Five Min</th>
+            <th>Last Hour</th>
             <th>Today</th>
+            <th>Yesterday</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>Submitted</td>
             <td>@Html.DisplayFor(modelItem => Model.LastFiveMinutes.Submitted)</td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.Today.Submitted)
-            </td>
+            <td>@Html.DisplayFor(modelItem => Model.Hour.Submitted)</td>
+            <td>@Html.DisplayFor(modelItem => Model.Today.Submitted)</td>
+            <td>@Html.DisplayFor(modelItem => Model.Yesterday.Submitted)</td>
         </tr>
         <tr>
             <td>Processing</td>
             <td>@Html.DisplayFor(modelItem => Model.LastFiveMinutes.Processing)</td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.Today.Processing)
-            </td>
+            <td>@Html.DisplayFor(modelItem => Model.Hour.Processing)</td>
+            <td>@Html.DisplayFor(modelItem => Model.Today.Processing)</td>
+            <td>@Html.DisplayFor(modelItem => Model.Yesterday.Processing)</td>
         </tr>
         <tr>
             <td>Failed</td>
             <td>@Html.DisplayFor(modelItem => Model.LastFiveMinutes.Failed)</td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.Today.Failed)
-            </td>
+            <td>@Html.DisplayFor(modelItem => Model.Hour.Failed)</td>
+            <td>@Html.DisplayFor(modelItem => Model.Today.Failed)</td>
+            <td>@Html.DisplayFor(modelItem => Model.Yesterday.Failed)</td>
         </tr>
         <tr>
             <td>Completed</td>
             <td>@Html.DisplayFor(modelItem => Model.LastFiveMinutes.Completed)</td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.Today.Completed)
-            </td>
+            <td>@Html.DisplayFor(modelItem => Model.Hour.Completed)</td>
+            <td>@Html.DisplayFor(modelItem => Model.Today.Completed)</td>
+            <td>@Html.DisplayFor(modelItem => Model.Yesterday.Completed)</td>
+        </tr>
+        <tr>
+            <td>Avg Proc Time</td>
+            <td>@Html.DisplayFor(modelItem => Model.LastFiveMinutes.AverageJobProcessingTime)</td>
+            <td>@Html.DisplayFor(modelItem => Model.Hour.AverageJobProcessingTime)</td>
+            <td>@Html.DisplayFor(modelItem => Model.Today.AverageJobProcessingTime)</td>
+            <td>@Html.DisplayFor(modelItem => Model.Yesterday.AverageJobProcessingTime)</td>
+        </tr>
+        <tr>
+            <td>Avg Queue Time</td>
+            <td>@Html.DisplayFor(modelItem => Model.LastFiveMinutes.AverageQueueTime)</td>
+            <td>@Html.DisplayFor(modelItem => Model.Hour.AverageQueueTime)</td>
+            <td>@Html.DisplayFor(modelItem => Model.Today.AverageQueueTime)</td>
+            <td>@Html.DisplayFor(modelItem => Model.Yesterday.AverageQueueTime)</td>
         </tr>
     </tbody>
     </table>
@@ -64,18 +80,18 @@
 
                 @foreach (var sub in topic.Subscriptions)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => sub.Name)
-                        </td>
-                        <td>@Html.DisplayFor(modelItem => sub.ActiveMessageCount)</td>
-                        <td>@Html.DisplayFor(modelItem => sub.DeadletterMessageCount)</td>
-                        @*<td>
-                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                            </td>*@
-                    </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => sub.Name)
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => sub.ActiveMessageCount)</td>
+                    <td>@Html.DisplayFor(modelItem => sub.DeadletterMessageCount)</td>
+                    @*<td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>*@
+                </tr>
                 }
             </tbody>
         </table>

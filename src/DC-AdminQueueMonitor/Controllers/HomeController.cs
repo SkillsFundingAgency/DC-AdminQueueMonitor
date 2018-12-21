@@ -10,9 +10,11 @@ using DC.Web.Ui.Services.Services;
 using DC.Web.Ui.Settings.Models;
 using DC_AdminQueueMonitor.Properties;
 using DC_AdminQueueMonitor.Services;
+using DC_AdminQueueMonitor.Models;
 
 namespace DC_AdminQueueMonitor.Controllers
 {
+    // [Authorize]
     public class HomeController : Controller
     {
         public async Task<ActionResult> Index()
@@ -21,6 +23,7 @@ namespace DC_AdminQueueMonitor.Controllers
 
             var x = System.Web.Configuration.WebConfigurationManager.AppSettings["ServiceBusConnectionString"];
             string connectionString = ConfigurationManager.AppSettings["ServiceBusConnectionString"];  //Settings.Default.ServiceBusConnectionString;
+            string auditConnectionString = ConfigurationManager.AppSettings["AuditConnectionString"];  //Settings.Default.ServiceBusConnectionString;
 
             ServiceBusService sbservice = new ServiceBusService(connectionString);
             result.Topics = sbservice.GetTopicsAndSubscriptions();
@@ -41,12 +44,22 @@ namespace DC_AdminQueueMonitor.Controllers
                 _httpClient,
                 apiSettings,
                 _serializationService);
-            JobStatusService jobStatusService = new JobStatusService(_submissionService);
+            var auditService = new AuditService(auditConnectionString);
 
-            var jsc = await jobStatusService.GetStatusCounts(new List<long>() { 5, 60, 60*8 });
+            JobStatusService jobStatusService = new JobStatusService(_submissionService, auditService);
+
+            var jsc = await jobStatusService.GetStatusCounts( 
+                new List<DateRangeUtc> {
+                    DateRangeUtc.FromTimeSpan(TimeSpan.FromMinutes(5)),
+                    DateRangeUtc.FromTimeSpan(TimeSpan.FromHours(1)),
+                    DateRangeUtc.FromDateToDay(DateTime.Today),
+                    DateRangeUtc.FromDateToDay(DateTime.Today.AddDays(-1)),
+                });
 
             result.LastFiveMinutes = jsc.ElementAt(0);
+            result.Hour = jsc.ElementAt(1);
             result.Today = jsc.ElementAt(2);
+            result.Yesterday = jsc.ElementAt(3);
 
             return View(result);
         }

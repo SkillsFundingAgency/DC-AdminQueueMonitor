@@ -218,19 +218,24 @@
     <Compile Include="Interfaces\ISubmissionService.cs" />
     <Compile Include="Models\ApiSettings.cs" />
     <Compile Include="Models\CloudStorageSettings.cs" />
+    <Compile Include="Models\DateRangeUtc.cs" />
     <Compile Include="Models\Environment.cs" />
     <Compile Include="Models\ILRPhysicalFile.cs" />
+    <Compile Include="Models\JobAuditDetail.cs" />
+    <Compile Include="Models\JobTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Services\AuditService.cs" />
     <Compile Include="Services\EnvironmentService.cs" />
     <Compile Include="Services\JobQueueService.cs" />
     <Compile Include="Services\JobStatusService.cs" />
     <Compile Include="Services\ServiceBusService.cs" />
     <Compile Include="Services\SubmissionService.cs" />
+    <Compile Include="ViewModel\AccountViewModels.cs" />
     <Compile Include="ViewModel\JobCount.cs" />
     <Compile Include="ViewModel\QueueViewModel.cs" />
     <Compile Include="ViewModel\Subscription.cs" />
@@ -330,7 +335,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>34310</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:34310/</IISUrl>
+          <IISUrl>http://localhost:1873/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

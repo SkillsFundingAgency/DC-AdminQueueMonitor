@@ -9,6 +9,8 @@ namespace DC_AdminQueueMonitor
     {
         public IEnumerable<Topic> Topics { get; set; }
         public JobCount LastFiveMinutes { get; set; }
+        public JobCount Hour { get; set; }
         public JobCount Today { get; set; }
+        public JobCount Yesterday { get; set; }
     }
 }

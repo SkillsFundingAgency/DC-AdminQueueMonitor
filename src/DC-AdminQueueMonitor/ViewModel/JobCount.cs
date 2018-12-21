@@ -11,5 +11,7 @@ namespace DC_AdminQueueMonitor
         public int Processing { get; set; }
         public int Failed { get; set; }
         public int Completed { get; set; }
+        public double AverageJobProcessingTime { get; set; }
+        public double AverageQueueTime { get; set; }
     }
 }

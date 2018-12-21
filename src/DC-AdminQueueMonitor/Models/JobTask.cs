@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace DC_AdminQueueMonitor
+namespace DC_AdminQueueMonitor.Models
 {
-    public class Topic
+    public class JobTask
     {
         public string Name { get; set; }
-
         public TimeSpan Duration { get; set; }
-
-        public IEnumerable<Subscription> Subscriptions { get; set; }
     }
 }

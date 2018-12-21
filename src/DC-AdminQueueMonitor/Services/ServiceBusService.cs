@@ -1,6 +1,7 @@
 ﻿using Microsoft.ServiceBus;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -22,6 +23,8 @@ namespace DC_AdminQueueMonitor.Services
             List<Topic> result = new List<Topic>();
             foreach (var topic in topics)
             {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
                 Topic t = new Topic()
                 {
                     Name = topic.Path
@@ -42,6 +45,7 @@ namespace DC_AdminQueueMonitor.Services
                 }
 
                 t.Subscriptions = subscriptions;
+                t.Duration = sw.Elapsed;
                 result.Add(t);
             }
             return result;
