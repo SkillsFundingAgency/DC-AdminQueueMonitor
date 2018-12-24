@@ -23,9 +23,9 @@ namespace DC_AdminQueueMonitor
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context, user manager and signin manager to use a single instance per request
-            app.CreatePerOwinContext(ApplicationDbContext.Create);
-            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-            app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
+            //app.CreatePerOwinContext(ApplicationDbContext.Create);
+            //app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+            //app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
@@ -100,10 +100,11 @@ namespace DC_AdminQueueMonitor
 
         private async Task SecurityTokenValidated(SecurityTokenValidatedNotification<WsFederationMessage, WsFederationAuthenticationOptions> notification)
         {
+            
 //            logger.Info("SecurityTokenValidated notification called");
 
-            var identity = notification.AuthenticationTicket.Identity;
-            var IsAdmin = identity.Claims.FirstOrDefault(claim => claim.Type == "http://schemas.portal.com/usertype")?.Value == "admin";
+            ///var identity = notification.AuthenticationTicket.Identity;
+            //ar IsAdmin = identity.Claims.FirstOrDefault(claim => claim.Type == "http://schemas.portal.com/usertype")?.Value == "admin";
 
             // usertype -- 
 
@@ -112,7 +113,7 @@ namespace DC_AdminQueueMonitor
             //var ukprn = identity.Claims.FirstOrDefault(claim => claim.Type == (DasClaimTypes.Ukprn))?.Value;
             //var email = identity.Claims.FirstOrDefault(claim => claim.Type == (DasClaimTypes.Email))?.Value;
 
-            long parsedUkprn;
+           // long parsedUkprn;
             //            if (!long.TryParse(ukprn, out parsedUkprn))
             //            {
             ////                logger.Info($"Unable to parse Ukprn \"{ukprn}\" from claims for user \"{id}\"");
