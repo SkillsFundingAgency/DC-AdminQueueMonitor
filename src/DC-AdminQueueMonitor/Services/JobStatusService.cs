@@ -2,8 +2,7 @@
 using DC.Web.Ui.Services.Services;
 using DC.Web.Ui.Settings.Models;
 using DC_AdminQueueMonitor.Models;
-using ESFA.DC.Jobs.Model;
-using ESFA.DC.JobStatus.Interface;
+using ESFA.DC.Jobs.Model.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
