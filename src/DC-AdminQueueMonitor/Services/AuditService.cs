@@ -50,7 +50,7 @@ namespace DC_AdminQueueMonitor.Services
                     {
                         long id = reader.GetInt64(0);
                         DateTime date = reader.GetDateTime(1);
-                        string name = string.Empty;
+                        string name = string.Empty; 
                         if (!reader.IsDBNull(2))
                         {
                             name = reader.GetString(2);
