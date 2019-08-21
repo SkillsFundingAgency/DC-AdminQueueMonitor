@@ -1,0 +1,45 @@
+﻿@model DC_AdminQueueMonitor.QueueViewModel
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<script src="~/Scripts/angular-chart.min.js"></script>
+
+<h2>Bus (DCT)</h2>
+<table class="table">
+
+    @foreach (var topic in Model.Topics)
+    {
+        <h2>@topic.Name</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        Active
+                    </th>
+                    <th>Deadletter</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var sub in topic.Subscriptions)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => sub.Name)
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => sub.ActiveMessageCount)</td>
+                    <td>@Html.DisplayFor(modelItem => sub.DeadletterMessageCount)</td>
+                    @*<td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>*@
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+

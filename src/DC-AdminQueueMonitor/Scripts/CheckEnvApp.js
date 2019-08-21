@@ -109,7 +109,7 @@ function CheckEnvController($scope, $http, $timeout, $interval) {
         $scope.message = "Working..." + e;
         $scope.started = true;
         if ($scope.promise == null) {
-            $scope.promise = $interval(function () { $scope.doacheck(4); }, 1000); // 120000
+            $scope.promise = $interval(function () { $scope.doacheck(e); }, 1000); // 120000
             $scope.timestarted = new Date();
         }
         $http(
