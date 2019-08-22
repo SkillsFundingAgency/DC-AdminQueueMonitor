@@ -63,6 +63,8 @@ function CheckEnvController($scope, $http, $timeout, $interval) {
       [0],
         [0],
         [0],
+        [0],
+        [0],
     ];
     $scope.dataNoTime = [
         [0],
@@ -70,9 +72,11 @@ function CheckEnvController($scope, $http, $timeout, $interval) {
         [0],
         [0],
         [0],
+        [0],
+        [0],
         [0]        
     ];
-    // array of job counts (probably by status in teh last five minutes)
+    // array of job counts (probably by status in the last five minutes)
     $scope.jobData = [
         [0],
         [0],
@@ -87,7 +91,7 @@ function CheckEnvController($scope, $http, $timeout, $interval) {
     $scope.started = false;
     $scope.startedJobs = false;
 
-    $scope.colors = ['#FDB45C', '#B4FD5C', '#B45CFD', '#B45C5C', '#FDB45C', '#FDB45C', '#FDB45C'];
+    $scope.colors = ['#FDB45C', '#B4FD5C', '#B45CFD', '#B45C5C', '#FDB45C', '#FDB45C', '#FDB45C', '#97adfd', '#D3FFCE'];
     //  [200],
     //  [408],
     //  [408],
